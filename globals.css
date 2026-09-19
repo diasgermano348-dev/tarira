@@ -1,0 +1,48 @@
+/* TARIRA Recruit & Ecosystem Design System Tokens (Inspired by Adecco RPO & Staffing) */
+:root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8FAFC;
+  --bg-dark: #111827;
+  --brand: #172554; /* Corporate Navy Header Blue (darkened) */
+  --brand-light: #2563EB;
+  --status-success: #16A34A;
+  --status-warning: #D97706;
+  --status-danger: #DC2626;
+  --text-primary: #172554; /* Portal text font color in header blue (darkened) */
+  --text-secondary: #3B5998;
+  --border-color: #E2E8F0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Always reserve the scrollbar's space. Without this, navigating between a
+   short page and a tall page makes the browser's scrollbar appear/disappear,
+   shifting the whole layout sideways by its width and producing a visible
+   "jump" or shake on every page change — especially under the fixed header. */
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+/* Defence-in-depth for mobile responsiveness: if any future change causes a
+   row of content (e.g. inside the fixed header) to be wider than the
+   screen, this stops it from creating a horizontal scrollbar / pushing
+   content invisibly off the right edge of the viewport, which is what
+   caused the "three dots" menu button and the "Sair" (logout) button to
+   disappear on narrow phones. */
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Ensure high-contrast legibility across all views */
+::selection {
+  background-color: var(--brand);
+  color: #FFFFFF;
+}
+

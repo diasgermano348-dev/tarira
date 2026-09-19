@@ -1,0 +1,560 @@
+@import "tailwindcss";
+@import "./globals.css";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Newsreader', 'Fraunces', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Tarira Recruit & Ecosystem Core Palette (Adecco RPO Inspired) */
+  --color-background: #FFFFFF;
+  --color-background-secondary: #F8FAFC;
+  --color-background-dark: #111827;
+
+  --color-brand: #172554; /* Corporate Header Navy Blue */
+  --color-brand-light: #2563EB;
+
+  --color-status-success: #16A34A;
+  --color-status-warning: #D97706;
+  --color-status-danger: #DC2626;
+
+  --color-text-primary: #172554; /* Global font color for portal text */
+  --color-text-secondary: #3B5998;
+
+  --color-border: #E2E8F0;
+
+  /* Signature commercial canvas */
+  --color-canvas: #FFFFFF;
+  --color-canvas-elevated: #F8FAFC;
+  --color-night: #F1F5F9;
+  --color-deep: #F8FAFC;
+  --color-gold: #2563EB; /* Realinhado ao manual de identidade — era #D97706 (âmbar), agora azul da marca */
+  --color-ivory: #172554;
+  --color-mist: #3B5998;
+  --color-copper: #1D4ED8; /* Realinhado ao manual de identidade — era #B45309 (castanho/cobre), agora azul mais profundo */
+}
+
+@layer base {
+  html {
+    /* Reserva sempre o espaço da barra de scroll vertical (mesmo em páginas
+       curtas sem scroll). Sem isto, ao entrar numa página longa (Técnicos de
+       Campo, Talentos e Quadros, landing page) a barra de scroll aparece de
+       repente e empurra todo o conteúdo alguns pixels para a esquerda — ao
+       mesmo tempo que a animação de entrada está a correr — dando a sensação
+       de "tremor" horizontal em vez de uma entrada suave.
+    */
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    @apply bg-background text-text-primary antialiased;
+    font-family: var(--font-sans);
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #FFFFFF;
+    color: #172554;
+    overflow-x: hidden;
+  }
+
+  /* Default font color for headings and text across the portal */
+  h1, h2, h3, h4, h5, h6 {
+    color: #172554;
+    letter-spacing: -0.02em;
+  }
+
+  /* Corporate Header & Blue Containers default font color */
+  header,
+  .bg-brand,
+  .bg-brand-light,
+  .bg-\[\#172554\],
+  .card-header-blue,
+  [data-theme-card="header-blue"],
+  .bg-blue-900,
+  .bg-blue-950 {
+    color: #FFFFFF;
+  }
+
+  /* Safety net: any white/light card or button — even nested inside a blue
+     container above — must reset its own text back to brand blue. Without
+     this, white text inherited from a blue ancestor becomes invisible on
+     these lighter surfaces. Explicit text-color utilities on individual
+     elements (text-white, text-amber-600, etc.) still win over this. */
+  .bg-white:not(.category-interactive-card:hover, .subservice-hover-card:hover, .interactive-hover-blue:hover, [class*="hover:bg-[#172554]"]:hover),
+  .bg-background:not(.category-interactive-card:hover, .subservice-hover-card:hover, .interactive-hover-blue:hover, [class*="hover:bg-[#172554]"]:hover),
+  .bg-background-secondary,
+  .card-white {
+    color: #172554;
+  }
+
+  /* Default text colors inside blue cards without overriding buttons */
+  .card-header-blue h1, .card-header-blue h2, .card-header-blue h3, .card-header-blue h4, .card-header-blue h5, .card-header-blue h6,
+  .bg-\[\#172554\] h1, .bg-\[\#172554\] h2, .bg-\[\#172554\] h3, .bg-\[\#172554\] h4, .bg-\[\#172554\] h5, .bg-\[\#172554\] h6 {
+    color: #FFFFFF;
+  }
+
+  /* Interactive Category & Service Cards: Force all text to clean white when card background transitions to navy blue on hover */
+  .category-interactive-card:hover,
+  .category-interactive-card:hover h1,
+  .category-interactive-card:hover h2,
+  .category-interactive-card:hover h3,
+  .category-interactive-card:hover h4,
+  .category-interactive-card:hover h5,
+  .category-interactive-card:hover h6,
+  .category-interactive-card:hover span:not(.card-invert-btn, .card-invert-btn *),
+  .category-interactive-card:hover strong,
+  .category-interactive-card:hover div,
+  .category-interactive-card:hover .card-title-hover,
+  .category-interactive-card:hover .card-cta-hover,
+  .subservice-hover-card:hover,
+  .subservice-hover-card:hover h1,
+  .subservice-hover-card:hover h2,
+  .subservice-hover-card:hover h3,
+  .subservice-hover-card:hover h4,
+  .subservice-hover-card:hover h5,
+  .subservice-hover-card:hover h6,
+  .subservice-hover-card:hover span:not(.card-invert-btn, .card-invert-btn *),
+  .subservice-hover-card:hover strong,
+  .subservice-hover-card:hover div,
+  .subservice-hover-card:hover .subservice-title-hover,
+  .group:hover .group-hover-card-blue,
+  .group:hover .group-hover-card-blue h1,
+  .group:hover .group-hover-card-blue h2,
+  .group:hover .group-hover-card-blue h3,
+  .group:hover .group-hover-card-blue span:not(.card-invert-btn, .card-invert-btn *),
+  .group:hover .group-hover-card-blue strong,
+  .group:hover .group-hover-card-blue div,
+  .group:hover .group-hover-card-blue .card-title-hover,
+  .group:hover .group-hover-card-blue .card-cta-hover,
+  .interactive-hover-blue:hover,
+  .interactive-hover-blue:hover h1,
+  .interactive-hover-blue:hover h2,
+  .interactive-hover-blue:hover h3,
+  .interactive-hover-blue:hover h4,
+  .interactive-hover-blue:hover span:not(.card-invert-btn, .card-invert-btn *),
+  .interactive-hover-blue:hover strong,
+  .interactive-hover-blue:hover div {
+    color: #FFFFFF !important;
+  }
+
+  .category-interactive-card:hover p,
+  .category-interactive-card:hover .card-subtitle-hover,
+  .subservice-hover-card:hover p,
+  .subservice-hover-card:hover .subservice-desc-hover,
+  .group:hover .group-hover-card-blue p,
+  .group:hover .group-hover-card-blue .card-subtitle-hover,
+  .interactive-hover-blue:hover p {
+    color: #DBEAFE !important; /* Soft light blue for optimal typography contrast */
+  }
+
+  .category-interactive-card:hover .card-kicker-hover,
+  .subservice-hover-card:hover .subservice-kicker,
+  .subservice-hover-card:hover .bg-blue-50,
+  .subservice-hover-card:hover .bg-slate-50,
+  .group:hover .group-hover-card-blue .card-kicker-hover,
+  .group:hover .group-hover-card-blue .bg-blue-50,
+  .interactive-hover-blue:hover .bg-blue-50,
+  .interactive-hover-blue:hover .bg-slate-50 {
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    color: #FFFFFF !important;
+  }
+
+  .subservice-hover-card:hover .card-invert-btn,
+  .subservice-hover-card:hover .card-invert-btn * {
+    background-color: #FFFFFF !important;
+    color: #172554 !important;
+  }
+
+  .category-interactive-card:hover .group-hover-bg-brand {
+    background-color: #172554 !important;
+  }
+}
+
+/* Utility used across the header, mobile pill rows and horizontal
+   carousels: allows an element to scroll (overflow-x-auto) without ever
+   showing the browser's scrollbar. Previously referenced across the app
+   (e.g. ModularPortalNavigation.tsx) but never actually defined, so the
+   scrollbar rendered normally wherever it was used. */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Global utility rules ensuring white text in any card that turns blue on hover */
+.subservice-hover-card:hover,
+.category-interactive-card:hover,
+.interactive-hover-blue:hover {
+  background-color: #172554 !important;
+  color: #FFFFFF !important;
+}
+
+.subservice-hover-card:hover *,
+.category-interactive-card:hover *,
+.interactive-hover-blue:hover * {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.subservice-hover-card:hover h1,
+.subservice-hover-card:hover h2,
+.subservice-hover-card:hover h3,
+.subservice-hover-card:hover h4,
+.subservice-hover-card:hover span:not(.card-invert-btn, .card-invert-btn *),
+.subservice-hover-card:hover strong,
+.category-interactive-card:hover h1,
+.category-interactive-card:hover h2,
+.category-interactive-card:hover h3,
+.category-interactive-card:hover h4,
+.category-interactive-card:hover span:not(.card-invert-btn, .card-invert-btn *),
+.category-interactive-card:hover strong,
+.interactive-hover-blue:hover h1,
+.interactive-hover-blue:hover h2,
+.interactive-hover-blue:hover h3,
+.interactive-hover-blue:hover h4,
+.interactive-hover-blue:hover span:not(.card-invert-btn, .card-invert-btn *),
+.interactive-hover-blue:hover strong {
+  color: #FFFFFF !important;
+}
+
+.subservice-hover-card:hover p,
+.category-interactive-card:hover p,
+.interactive-hover-blue:hover p {
+  color: #DBEAFE !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeRightToLeft {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scaleX(0.95); }
+  50% { opacity: 1; transform: scaleX(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes zoomInOut {
+  0%, 100% { transform: scale(1); opacity: 0.92; }
+  50% { transform: scale(1.09); opacity: 1; }
+}
+
+.animate-zoom-in-out {
+  animation: zoomInOut 2s ease-in-out infinite;
+  display: inline-block;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-up {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marqueeRightToLeft 18s linear infinite;
+}
+
+.animate-marquee:hover, .animate-marquee-fast:hover {
+  animation-play-state: paused;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: floatSlow 3.5s ease-in-out infinite;
+}
+
+@keyframes traceLineDrawAndReturn {
+  0% {
+    transform: scaleX(0);
+    opacity: 0.3;
+  }
+  38% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  58% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  95% {
+    transform: scaleX(0);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0.3;
+  }
+}
+
+.animate-trace-line {
+  transform-origin: left center;
+  animation: traceLineDrawAndReturn 3.2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* 🌟 Destaques Visuais Animados: Efeito de Linha Giratória / Orbitante e Shimmer */
+@keyframes spinSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes textShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 7s linear infinite;
+}
+
+.animate-spin-slow-reverse {
+  animation: spinSlow 9s linear infinite reverse;
+}
+
+.animate-cursor-blink {
+  animation: cursorBlink 0.85s step-start infinite;
+}
+
+.text-shimmer-blue {
+  background: linear-gradient(90deg, #172554 0%, #2563eb 25%, #60a5fa 50%, #2563eb 75%, #172554 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 4s linear infinite;
+}
+
+.text-shimmer-light {
+  background: linear-gradient(90deg, #ffffff 0%, #93c5fd 30%, #ffffff 50%, #60a5fa 70%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 3.5s linear infinite;
+}
+
+/* 🌟 Luminous Atmosphere & Menus Styling — versão clara: calor sutil da identidade visual TARIRA sobre fundo branco */
+.opera-gx-bg {
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse 1000px 600px at 50% 0%, rgba(37, 99, 235, 0.04), transparent 60%),
+    radial-gradient(ellipse 900px 500px at 15% 40%, rgba(23, 37, 84, 0.03), transparent 55%);
+}
+
+.crystal-dark-bg {
+  background-color: transparent;
+  background-image:
+    radial-gradient(ellipse 1100px 650px at 50% 100px, rgba(37, 99, 235, 0.04), transparent 65%),
+    radial-gradient(ellipse 1000px 600px at 20% 700px, rgba(23, 37, 84, 0.03), transparent 60%);
+}
+
+/* Ambient highlight line for navbar and menus */
+.luminous-top-rim {
+  position: relative;
+}
+.luminous-top-rim::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(37, 99, 235, 0.4) 25%, rgba(30, 58, 138, 0.6) 75%, transparent 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Adecco-Inspired White Section & Header-Blue Card System */
+.section-white {
+  background-color: #FFFFFF !important;
+  color: #172554 !important;
+}
+
+.section-secondary {
+  background-color: #F8FAFC !important;
+  color: #172554 !important;
+}
+
+/* Regular White Cards */
+.card-white {
+  background-color: #FFFFFF !important;
+  color: #172554 !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Signature Header-Blue Cards (Cards with header background color) */
+.card-header-blue {
+  background-color: #172554 !important;
+  color: #FFFFFF !important;
+  border: 1px solid #172554 !important;
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.3), 0 8px 10px -6px rgba(30, 58, 138, 0.2) !important;
+}
+
+/* Ensure text in card-header-blue defaults to white, but NEVER overrides white buttons */
+.card-header-blue h1, .card-header-blue h2, .card-header-blue h3, 
+.card-header-blue h4, .card-header-blue h5, .card-header-blue h6,
+.card-header-blue p {
+  color: #FFFFFF;
+}
+
+/* Contrast Guarantee: ANY element with bg-white or button with bg-white MUST have high-contrast text */
+button.bg-white,
+.btn-white,
+a.bg-white,
+span.bg-white {
+  color: #172554 !important;
+}
+
+button.bg-white span:not([class*="text-emerald"]):not([class*="text-amber"]):not([class*="text-red"]):not([class*="text-blue"]):not([class*="text-status"]),
+.card-header-blue button.bg-white,
+.card-header-blue button.bg-white *,
+.card-header-blue a.bg-white,
+.card-header-blue a.bg-white *,
+.card-header-blue span.bg-white,
+.card-header-blue span.bg-white *,
+header button.bg-white,
+header button.bg-white *,
+.bg-\[\#172554\] button.bg-white,
+.bg-\[\#172554\] button.bg-white * {
+  color: #172554 !important;
+}
+
+/* Contrast fix on light surfaces: the muted slate tones used for long-form
+   descriptions were reading too pale against white/light cards. Darken them
+   one step wherever they sit on a light surface, while leaving the same
+   muted tones untouched on navy/dark panels (admin, modals) where the
+   original lighter tone still reads clearly. */
+.bg-white .text-slate-400, .bg-white.text-slate-400,
+.bg-background .text-slate-400, .bg-background.text-slate-400,
+.bg-background-secondary .text-slate-400, .bg-background-secondary.text-slate-400,
+.card-white .text-slate-400, .card-white.text-slate-400,
+.section-white .text-slate-400, .section-white.text-slate-400,
+.section-secondary .text-slate-400, .section-secondary.text-slate-400,
+.glass-panel .text-slate-400, .glass-panel.text-slate-400,
+.luminous-blue-panel .text-slate-400, .luminous-blue-panel.text-slate-400,
+.bg-slate-50 .text-slate-400, .bg-slate-50.text-slate-400 {
+  color: #475569 !important; /* slate-600 */
+}
+
+.bg-white .text-slate-500, .bg-white.text-slate-500,
+.bg-background .text-slate-500, .bg-background.text-slate-500,
+.bg-background-secondary .text-slate-500, .bg-background-secondary.text-slate-500,
+.card-white .text-slate-500, .card-white.text-slate-500,
+.section-white .text-slate-500, .section-white.text-slate-500,
+.section-secondary .text-slate-500, .section-secondary.text-slate-500,
+.glass-panel .text-slate-500, .glass-panel.text-slate-500,
+.luminous-blue-panel .text-slate-500, .luminous-blue-panel.text-slate-500,
+.bg-slate-50 .text-slate-500, .bg-slate-50.text-slate-500 {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* Radiant glow for glass panels and cards — White canvas with subtle border */
+.luminous-blue-panel {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 4px 20px -4px rgba(30, 58, 138, 0.08) !important;
+}
+
+.glass-panel {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #172554 !important;
+  box-shadow: 0 4px 16px -2px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* RPO Orbiting Beam Animation: descendo -> por baixo -> subindo -> por cima -> girando */
+@keyframes rpoOrbitLoop {
+  0% {
+    stroke-dashoffset: 460;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-rpo-orbit {
+  animation: rpoOrbitLoop 2.8s linear infinite;
+}
+
+@keyframes rpoParticleOrbit {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(100%, 0);
+  }
+  50% {
+    transform: translate(100%, 100%);
+  }
+  75% {
+    transform: translate(0, 100%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+
+
+/* ==========================================================================
+   Modais e formulários: todo o conteúdo tem de ficar alcançável.
+   - overlays de ecrã inteiro rolam por si (sem cortar o topo/fundo do formulário);
+   - cartões mais altos que o ecrã centram-se quando cabem e rolam quando não cabem;
+   - a rolagem não "passa" para a página de fundo.
+   ========================================================================== */
+.fixed.inset-0.flex {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.fixed.inset-0.flex.items-center:not(.items-start) {
+  align-items: flex-start;
+}
+.fixed.inset-0.flex.items-center:not(.items-start) > :not(.fixed) {
+  margin-block: auto;
+}
